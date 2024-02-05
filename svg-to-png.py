@@ -3,6 +3,7 @@ from cairosvg import svg2png
 import os
 import sys
 import re
+import wget
 
 try:   
     args = sys.argv[1:]
@@ -19,7 +20,7 @@ except FileNotFoundError:
     print("File not found.")
     exit
 except:
-    print("Something unexpected happened")
+    print("Something unexpected happened: {}".format(str(e)))
     exit
 else:
     if not os.path.exists(png_dir):
@@ -34,15 +35,17 @@ try:
         while os.path.exists(pngf):
             pngf = png_dir + '/' + filename + '-' + str(cn) + ".png"
             cn+=1
+        url = re.match(r".+[\]\(](.+\.svg)", code).group(1)
+        remote_filename = wget.download(url)
+        with open(remote_filename, 'r') as f:
+            svg2png(bytestring=f.read(), write_to=pngf)
+            file_content = file_content.replace(url,pngf)
 
-        svg2png(bytestring=code,write_to=pngf)
-        file_content = file_content.replace(code,'![](' + pngf + ')')
-
-except ValueError:
-    print("Something is wrong in your SVG code. The size may not be defined.")
+except ValueError as e:
+    print("Something is wrong in your SVG code: {}".format(str(e)))
     exit
-except:
-    print("Something unexpected happened")
+except Exception as e:
+    print("Something unexpected happened: {}".format(str(e)))
     exit
 else:
 
