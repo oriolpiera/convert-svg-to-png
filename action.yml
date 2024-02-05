@@ -1,11 +1,11 @@
-name: 'Converting SVG code to png'
+name: 'Converting SVG files to png into Markdown file'
 inputs:
   file:
-    description: 'file path to convert the SVG code'
+    description: 'Markdown file path with svg files embeded with url'
     required: true
     default: 'README.md'
   path:
-    description: 'The path where the converted will go'
+    description: 'The path where the converted will go (existing folder)'
     required: true
     default: 'Images/'
   name:

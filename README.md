@@ -1,10 +1,8 @@
-# Convert-SVG-to-png
-Convert SVG code to png and replace the code with a called to the image file in Markdown files
+# Convert-SVG-embeded-images-to-png
+Convert SVG files to png and replace the code with a called to the image file in Markdown files. This project is a fork of [convert-svg-to-png](https://github.com/joseaeltala/convert-svg-to-png) that convert svg code in a Markdown file, instead of embeded images itself.
 
 # Objectives
-GitHub cannot view SVG files or code from the web, so the main objective of this action is to convert the svg code inserted into any file to PNG, replacing the SVG line by a call to the image (only markdown).
-
-This will be useful to be able to see the SVG code inserted in .MD files from the GitHub web platform.
+Email clients (like Gmail) not render svg files, so if we want to send Markdown file with svg images, we have to convert before.
 
 # Inputs
 | NAME | VALUE | DEFAULT | DESCRIPTION |
@@ -21,10 +19,10 @@ This will be useful to be able to see the SVG code inserted in .MD files from th
         steps:
           - uses: actions/checkout@v1
           - name: convert-svg-to-png
-            uses: joseaeltala/convert-svg-to-png/@master
+            uses: oriolpiera/convert-svg-to-png/@master
             with:
               file: "README.md"
-              path: "Images/png"
+              path: "Images/png" # Existing folders
               name: "converted-svg-file"
           - name: Commit files
             run: |
